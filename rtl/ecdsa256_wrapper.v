@@ -75,12 +75,12 @@ module ecdsa256_wrapper
 // localparam CONTROL_INIT_BIT  = 0; -- not used
    localparam CONTROL_NEXT_BIT  = 1;
 
-   localparam STATUS_READY_BIT  = 0;
-// localparam STATUS_VALID_BIT  = 1; -- hardcoded to always read 1
+// localparam STATUS_READY_BIT  = 0; -- hardcoded to always read 1
+   localparam STATUS_VALID_BIT  = 1;
 
    localparam CORE_NAME0        = 32'h65636473; // "ecds"
    localparam CORE_NAME1        = 32'h61323536; // "a256"
-   localparam CORE_VERSION      = 32'h302E3130; // "0.10"
+   localparam CORE_VERSION      = 32'h302E3131; // "0.11"
 
 
    //

@@ -108,7 +108,7 @@ module ecdsa256
 
 
    //
-   // Montgomery Coefficient Calculator
+   // Curve Base Point Multiplier
    //
 	reg  next_dly;
 	

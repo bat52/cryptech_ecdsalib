@@ -1,8 +1,8 @@
 //------------------------------------------------------------------------------
 //
-// mac16_artix7.v
+// mac16_generic.v
 // -----------------------------------------------------------------------------
-// Hardware (Artix-7 DSP48E1) 16-bit multiplier and 47-bit accumulator.
+// Generic 16-bit multiplier and 47-bit accumulator.
 //
 // Authors: Pavel Shatov
 //
@@ -36,7 +36,7 @@
 //
 //------------------------------------------------------------------------------
 
-module mac16_artix7
+module mac16_generic
 	(
 		input					clk,		// clock
 		input					clr,		// clear accumulator (active-high)
@@ -46,41 +46,25 @@ module mac16_artix7
 		output	[46: 0]	s			// sum output
 	);
 	
-			
 		//
-		// DSP48E1 Slice
+		// Multiplier
 		//
+	wire	[31: 0]	p = {{16{1'b0}}, a} * {{16{1'b0}}, b};
+	wire	[46: 0]	p_ext = {{15{1'b0}}, p};
 		
-		/* Operation Mode */
-	wire	[ 3: 0]	dsp48e1_alumode	= 4'b0000;
-	wire	[ 6: 0]	dsp48e1_opmode		= {2'b01, clr, 4'b0101};
-		
-		/* Internal Product */
-	wire	[47: 0]	p_int;
-
-	dsp48e1_wrapper dsp_adder
-	(
-		.clk			(clk),
-		
-		.ce			(ce),
-		
-		.carry		(1'b0),
-		
-		.alumode		(dsp48e1_alumode),
-		.opmode		(dsp48e1_opmode),
-		
-		.a				({{14{1'b0}}, a}),
-		.b				({{ 2{1'b0}}, b}),
-		.c				({48{1'b0}}),
-		
-		.p				(p_int)
-	);
-
 		//
-		// Output Mapping
+		// Accumulator
 		//
-	assign s = p_int[46:0];
+	reg	[46: 0]	s_int;
 	
+	always @(posedge clk)
+		//
+		if (ce) s_int <= clr ? p_ext : p_ext + s_int;
+		
+		//
+		// Output
+		//
+	assign s = s_int;
 
 endmodule
 

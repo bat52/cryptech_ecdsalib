@@ -1,8 +1,8 @@
 //------------------------------------------------------------------------------
 //
-// mac16_artix7.v
+// adder47_generic.v
 // -----------------------------------------------------------------------------
-// Hardware (Artix-7 DSP48E1) 16-bit multiplier and 47-bit accumulator.
+// Generic 47-bit adder.
 //
 // Authors: Pavel Shatov
 //
@@ -36,54 +36,28 @@
 //
 //------------------------------------------------------------------------------
 
-module mac16_artix7
+module adder47_generic
 	(
 		input					clk,		// clock
-		input					clr,		// clear accumulator (active-high)
-		input					ce,		// enable clock (active-high)
-		input		[15: 0]	a,			// operand input
-		input		[15: 0]	b,			// operand input
+		input		[46: 0]	a,			// operand input
+		input		[46: 0]	b,			// operand input
 		output	[46: 0]	s			// sum output
 	);
 	
-			
 		//
-		// DSP48E1 Slice
+		// Sum
 		//
-		
-		/* Operation Mode */
-	wire	[ 3: 0]	dsp48e1_alumode	= 4'b0000;
-	wire	[ 6: 0]	dsp48e1_opmode		= {2'b01, clr, 4'b0101};
-		
-		/* Internal Product */
-	wire	[47: 0]	p_int;
-
-	dsp48e1_wrapper dsp_adder
-	(
-		.clk			(clk),
-		
-		.ce			(ce),
-		
-		.carry		(1'b0),
-		
-		.alumode		(dsp48e1_alumode),
-		.opmode		(dsp48e1_opmode),
-		
-		.a				({{14{1'b0}}, a}),
-		.b				({{ 2{1'b0}}, b}),
-		.c				({48{1'b0}}),
-		
-		.p				(p_int)
-	);
-
-		//
-		// Output Mapping
-		//
-	assign s = p_int[46:0];
+	reg	[46: 0]	s_int;
 	
+	always @(posedge clk)
+		s_int <= a + b;
+		
+		//
+		// Output
+		//
+	assign s = s_int;
 
 endmodule
-
 
 //------------------------------------------------------------------------------
 // End-of-File

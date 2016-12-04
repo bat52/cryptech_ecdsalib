@@ -63,7 +63,7 @@ module dsp48e1_wrapper
 		.AREG						(0),
 		.BREG						(0),
 		.CREG						(0),
-		.DREG						(1),
+		.DREG						(0),
 		.MREG						(0),
 		.PREG						(1),
 		.ADREG					(0),
