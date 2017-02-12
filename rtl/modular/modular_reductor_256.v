@@ -173,7 +173,20 @@ module modular_reductor_256
 		// Look-up Table
 		//
 		
-		// TODO: Explain s5!!!
+		//
+		// Take a look at the corresponding C model for more information
+		// on how exactly the math behind reduction works. The first step
+		// is to assemble nine 256-bit values ("z-words") from 32-bit parts
+		// of the full 512-bit product ("c-word"). The problem with z5 is
+		// that it contains c13 two times. This implementation scans from
+		// c15 to c0 and writes current part of c-word into corresponding
+		// parts of z-words. Since those 32-bit parts are stored in block
+		// memories, one source word can only be written to one location in
+		// every z-word at a time. The trick is to delay c13 and then write
+		// the delayed value at the corresponding location in z5 instead of
+		// the next c12. "z_save" flag is used to indicate that the current
+		// word should be delayed and written once again during the next cycle.
+		//
 		
 	reg	[9*WORD_COUNTER_WIDTH-1:0]	z_addr;	//
 	reg	[9                   -1:0]	z_wren;	//
@@ -398,7 +411,6 @@ module modular_reductor_256
 	);
 	
 	
-	
 	wire	[WORD_COUNTER_WIDTH-1:0]	adder0_ab_addr;
 	wire	[WORD_COUNTER_WIDTH-1:0]	adder1_ab_addr;
 	wire	[WORD_COUNTER_WIDTH-1:0]	subtractor_ab_addr;
@@ -414,7 +426,12 @@ module modular_reductor_256
 	
 	// n_addr - only 1 output, because all modules are in sync
 	
-	modular_adder adder_inst0
+	modular_adder #
+	(
+		.OPERAND_NUM_WORDS	(OPERAND_NUM_WORDS),
+		.WORD_COUNTER_WIDTH	(WORD_COUNTER_WIDTH)
+	)
+	adder_inst0
 	(
 		.clk			(clk),
 		.rst_n		(rst_n),
@@ -433,7 +450,12 @@ module modular_reductor_256
 		.s_dout		(bram_sum0_wr_din)
 	);
 	
-	modular_adder adder_inst1
+	modular_adder #
+	(
+		.OPERAND_NUM_WORDS	(OPERAND_NUM_WORDS),
+		.WORD_COUNTER_WIDTH	(WORD_COUNTER_WIDTH)
+	)
+	adder_inst1
 	(
 		.clk			(clk),
 		.rst_n		(rst_n),
@@ -452,7 +474,12 @@ module modular_reductor_256
 		.s_dout		(bram_sum1_wr_din)
 	);
 	
-	modular_subtractor subtractor_inst
+	modular_subtractor #
+	(
+		.OPERAND_NUM_WORDS	(OPERAND_NUM_WORDS),
+		.WORD_COUNTER_WIDTH	(WORD_COUNTER_WIDTH)
+	)
+	subtractor_inst
 	(
 		.clk			(clk),
 		.rst_n		(rst_n),
@@ -473,7 +500,7 @@ module modular_reductor_256
 	
 	
 		//
-		// address
+		// Address (Operand) Selector
 		//
 	always @(*)
 		//
@@ -572,7 +599,6 @@ module modular_reductor_256
 		endcase
 
 	
-	
 		//
 		// adder 0
 		//
@@ -650,13 +676,13 @@ module modular_reductor_256
 	end
 
 
-
-
+		//
+		// Address Mapping
+		//
 	assign p_addr	= bram_sum0_wr_addr;
 	assign p_wren	= bram_sum0_wr_wren & store_p;
 	assign p_dout	= bram_sum0_wr_din;
-	
-	
+		
 		
 endmodule
 

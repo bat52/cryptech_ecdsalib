@@ -347,7 +347,7 @@ module tb_modular_multiplier_256;
 			p_ok = (p_shreg == pp);
 
 				/* display results */
-			$display("test_modular_multiplier(): %s", p_ok ? "OK" : "ERROR");
+			$display("test_modular_multiplier_256(): %s", p_ok ? "OK" : "ERROR");
 			
 				/* update flag */
 			ok = ok && p_ok;

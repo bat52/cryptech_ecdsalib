@@ -1,8 +1,8 @@
 //------------------------------------------------------------------------------
 //
-// curve_adder_256.v
+// curve_dbl_add_256.v
 // -----------------------------------------------------------------------------
-// Elliptic curve point adder.
+// Elliptic curve point adder and doubler.
 //
 // Authors: Pavel Shatov
 //
@@ -292,7 +292,13 @@ module curve_dbl_add_256
 	wire	[                32-1:0]	mw_mov_din_x;
 	wire	[                32-1:0]	mw_mov_dout_y;
 	
-	mw_mover mw_mover_inst
+	mw_mover #
+	(
+		.WORD_COUNTER_WIDTH	(WORD_COUNTER_WIDTH),
+		.OPERAND_NUM_WORDS	(OPERAND_NUM_WORDS)
+
+	)
+	mw_mover_inst
 	(
 		.clk		(clk),
 		.rst_n	(rst_n),

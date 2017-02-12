@@ -293,8 +293,8 @@ module modular_multiplier_256
 		//
 		// Accumulators
 		//
-	wire	[46: 0]	add48_cw0_s;
-	wire	[46: 0]	add48_cw1_s;
+	wire	[46: 0]	add47_cw0_s;
+	wire	[46: 0]	add47_cw1_s;
 	
 	
 		//
@@ -314,26 +314,26 @@ module modular_multiplier_256
 		//
 		si_next_dly <= si_lsb[62:47];
 	
-	wire	[46: 0]	add48_cw0_a = si_lsb[46:0];
-	wire	[46: 0]	add48_cw0_b = {{16{1'b0}}, si_prev_dly};
+	wire	[46: 0]	add47_cw0_a = si_lsb[46:0];
+	wire	[46: 0]	add47_cw0_b = {{16{1'b0}}, si_prev_dly};
 	
-	wire	[46: 0]	add48_cw1_a = add48_cw0_s;
-	wire	[46: 0]	add48_cw1_b = {{15{1'b0}}, si_next_dly, mask_cw1_sum ? {16{1'b0}} : {1'b0, add48_cw1_s[46:32]}};	
+	wire	[46: 0]	add47_cw1_a = add47_cw0_s;
+	wire	[46: 0]	add47_cw1_b = {{15{1'b0}}, si_next_dly, mask_cw1_sum ? {16{1'b0}} : {1'b0, add47_cw1_s[46:32]}};	
 	
-	adder47_wrapper add48_cw0_inst
+	adder47_wrapper add47_cw0_inst
 	(
 		.clk	(clk),
-		.a		(add48_cw0_a),
-		.b		(add48_cw0_b),
-		.s		(add48_cw0_s)
+		.a		(add47_cw0_a),
+		.b		(add47_cw0_b),
+		.s		(add47_cw0_s)
 	);
 	
-	adder47_wrapper add48_cw1_inst
+	adder47_wrapper add47_cw1_inst
 	(
 		.clk	(clk),
-		.a		(add48_cw1_a),
-		.b		(add48_cw1_b),
-		.s		(add48_cw1_s)
+		.a		(add47_cw1_a),
+		.b		(add47_cw1_b),
+		.s		(add47_cw1_s)
 	);
 	
 	
@@ -364,7 +364,7 @@ module modular_multiplier_256
 
 		.a_addr	(bram_c_addr),
 		.a_wr		(store_c_word),
-		.a_in		(add48_cw1_s[31:0]),
+		.a_in		(add47_cw1_s[31:0]),
 		.a_out	(),
 
 		.b_addr	(reduce_c_addr),
