@@ -37,50 +37,50 @@
 //------------------------------------------------------------------------------
 
 module mac16_artix7
-	(
-		input					clk,		// clock
-		input					clr,		// clear accumulator (active-high)
-		input					ce,		// enable clock (active-high)
-		input		[15: 0]	a,			// operand input
-		input		[15: 0]	b,			// operand input
-		output	[46: 0]	s			// sum output
-	);
-	
-			
-		//
-		// DSP48E1 Slice
-		//
-		
-		/* Operation Mode */
-	wire	[ 3: 0]	dsp48e1_alumode	= 4'b0000;
-	wire	[ 6: 0]	dsp48e1_opmode		= {2'b01, clr, 4'b0101};
-		
-		/* Internal Product */
-	wire	[47: 0]	p_int;
+  (
+   input 	  clk, // clock
+   input 	  clr, // clear accumulator (active-high)
+   input 	  ce, // enable clock (active-high)
+   input [15: 0]  a, // operand input
+   input [15: 0]  b, // operand input
+   output [46: 0] s			// sum output
+   );
 
-	dsp48e1_wrapper dsp_adder
-	(
-		.clk			(clk),
-		
-		.ce			(ce),
-		
-		.carry		(1'b0),
-		
-		.alumode		(dsp48e1_alumode),
-		.opmode		(dsp48e1_opmode),
-		
-		.a				({{14{1'b0}}, a}),
-		.b				({{ 2{1'b0}}, b}),
-		.c				({48{1'b0}}),
-		
-		.p				(p_int)
-	);
 
-		//
-		// Output Mapping
-		//
-	assign s = p_int[46:0];
-	
+   //
+   // DSP48E1 Slice
+   //
+
+   /* Operation Mode */
+   wire [ 3: 0]   dsp48e1_alumode	= 4'b0000;
+   wire [ 6: 0]   dsp48e1_opmode		= {2'b01, clr, 4'b0101};
+
+   /* Internal Product */
+   wire [47: 0]   p_int;
+
+   dsp48e1_wrapper dsp_adder
+     (
+      .clk			(clk),
+
+      .ce			(ce),
+
+      .carry		(1'b0),
+
+      .alumode		(dsp48e1_alumode),
+      .opmode		(dsp48e1_opmode),
+
+      .a				({{14{1'b0}}, a}),
+      .b				({{ 2{1'b0}}, b}),
+      .c				({48{1'b0}}),
+
+      .p				(p_int)
+      );
+
+   //
+   // Output Mapping
+   //
+   assign s = p_int[46:0];
+
 
 endmodule
 

@@ -37,25 +37,25 @@
 //------------------------------------------------------------------------------
 
 module adder47_generic
-	(
-		input					clk,		// clock
-		input		[46: 0]	a,			// operand input
-		input		[46: 0]	b,			// operand input
-		output	[46: 0]	s			// sum output
-	);
-	
-		//
-		// Sum
-		//
-	reg	[46: 0]	s_int;
-	
-	always @(posedge clk)
-		s_int <= a + b;
-		
-		//
-		// Output
-		//
-	assign s = s_int;
+  (
+   input 	  clk, // clock
+   input [46: 0]  a, // operand input
+   input [46: 0]  b, // operand input
+   output [46: 0] s			// sum output
+   );
+
+   //
+   // Sum
+   //
+   reg [46: 0] 	  s_int;
+
+   always @(posedge clk)
+     s_int <= a + b;
+
+   //
+   // Output
+   //
+   assign s = s_int;
 
 endmodule
 

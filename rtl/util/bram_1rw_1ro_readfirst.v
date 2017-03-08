@@ -36,11 +36,11 @@ module bram_1rw_1ro_readfirst
   #(parameter MEM_WIDTH            = 32,
     parameter MEM_ADDR_BITS        = 8)
    (
-    input wire                     clk,
+    input wire 			   clk,
 
     input wire [MEM_ADDR_BITS-1:0] a_addr,
-    input wire                     a_wr,
-    input wire [MEM_WIDTH-1:0]     a_in,
+    input wire 			   a_wr,
+    input wire [MEM_WIDTH-1:0] 	   a_in,
     output wire [MEM_WIDTH-1:0]    a_out,
 
     input wire [MEM_ADDR_BITS-1:0] b_addr,
@@ -52,27 +52,27 @@ module bram_1rw_1ro_readfirst
    // BRAM
    //
    (* RAM_STYLE="BLOCK" *)
-   reg [MEM_WIDTH-1:0]             bram[0:(2**MEM_ADDR_BITS)-1];
-	
-	
-	//
-	// Initialization
-	//
-	/**
-	integer c;
-	initial begin
-		for (c=0; c<(2**MEM_ADDR_BITS); c=c+1)
-			bram[c] = {MEM_WIDTH{1'b0}};
+   reg [MEM_WIDTH-1:0] 		   bram[0:(2**MEM_ADDR_BITS)-1];
+
+
+   //
+   // Initialization
+   //
+   /**
+    integer c;
+    initial begin
+    for (c=0; c<(2**MEM_ADDR_BITS); c=c+1)
+    bram[c] = {MEM_WIDTH{1'b0}};
 	end
-	**/
-	
+    **/
+
 
 
    //
    // Output Registers
    //
-   reg [MEM_WIDTH-1:0]             bram_reg_a;
-   reg [MEM_WIDTH-1:0]             bram_reg_b;
+   reg [MEM_WIDTH-1:0] 		   bram_reg_a;
+   reg [MEM_WIDTH-1:0] 		   bram_reg_b;
 
    assign a_out = bram_reg_a;
    assign b_out = bram_reg_b;

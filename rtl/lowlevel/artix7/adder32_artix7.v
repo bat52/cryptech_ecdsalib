@@ -37,56 +37,56 @@
 //------------------------------------------------------------------------------
 
 module adder32_artix7
-	(
-		input					clk,		// clock
-		input		[31: 0]	a,			// operand input
-		input		[31: 0]	b,			// operand input
-		output	[31: 0]	s,			// sum output
-		input					c_in,		// carry input
-		output				c_out		// carry output
-	);
-	
-		//
-		// Lower and higher parts of operand
-		//
-	wire	[17: 0]	bl = b[17: 0];
-	wire	[13: 0]	bh = b[31:18];
+  (
+   input 	  clk, // clock
+   input [31: 0]  a, // operand input
+   input [31: 0]  b, // operand input
+   output [31: 0] s, // sum output
+   input 	  c_in, // carry input
+   output 	  c_out		// carry output
+   );
 
-		
-		//
-		// DSP48E1 Slice
-		//
-		
-		/* Operation Mode */
-	wire	[ 3: 0]	dsp48e1_alumode	= 4'b0000;
-	wire	[ 6: 0]	dsp48e1_opmode		= 7'b0110011;
-		
-		/* Internal Product */
-	wire	[47: 0]	p_int;
+   //
+   // Lower and higher parts of operand
+   //
+   wire [17: 0]   bl = b[17: 0];
+   wire [13: 0]   bh = b[31:18];
 
-	dsp48e1_wrapper dsp_adder
-	(
-		.clk			(clk),
-		
-		.ce			(1'b1),
-		
-		.carry		(c_in),
-		
-		.alumode		(dsp48e1_alumode),
-		.opmode		(dsp48e1_opmode),
-		
-		.a				({{16{1'b0}}, bh}),
-		.b				(bl),
-		.c				({{16{1'b0}}, a}),
-		
-		.p				(p_int)
-	);
 
-		//
-		// Output Mapping
-		//
-	assign s 		= p_int[31: 0];
-	assign c_out	= p_int[32];
+   //
+   // DSP48E1 Slice
+   //
+
+   /* Operation Mode */
+   wire [ 3: 0]   dsp48e1_alumode	= 4'b0000;
+   wire [ 6: 0]   dsp48e1_opmode		= 7'b0110011;
+
+   /* Internal Product */
+   wire [47: 0]   p_int;
+
+   dsp48e1_wrapper dsp_adder
+     (
+      .clk			(clk),
+
+      .ce			(1'b1),
+
+      .carry		(c_in),
+
+      .alumode		(dsp48e1_alumode),
+      .opmode		(dsp48e1_opmode),
+
+      .a				({{16{1'b0}}, bh}),
+      .b				(bl),
+      .c				({{16{1'b0}}, a}),
+
+      .p				(p_int)
+      );
+
+   //
+   // Output Mapping
+   //
+   assign s 		= p_int[31: 0];
+   assign c_out	= p_int[32];
 
 
 endmodule

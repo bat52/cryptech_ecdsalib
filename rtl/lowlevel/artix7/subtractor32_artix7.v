@@ -37,55 +37,55 @@
 //------------------------------------------------------------------------------
 
 module subtractor32_artix7
-	(
-		input					clk,
-		input		[31: 0]	a,
-		input		[31: 0]	b,
-		output	[31: 0]	d,
-		input					b_in,
-		output				b_out	
-	);
+  (
+   input 	  clk,
+   input [31: 0]  a,
+   input [31: 0]  b,
+   output [31: 0] d,
+   input 	  b_in,
+   output 	  b_out
+   );
 
-		//
-		// Lower and higher parts of operand
-		//
-	wire	[17: 0]	bl = b[17: 0];
-	wire	[13: 0]	bh = b[31:18];
-	
-		//
-		// DSP48E1 Slice
-		//
-		
-		/* Operation Mode */
-	wire	[ 3: 0]	dsp48e1_alumode	= 4'b0011;
-	wire	[ 6: 0]	dsp48e1_opmode		= 7'b0110011;
+   //
+   // Lower and higher parts of operand
+   //
+   wire [17: 0]   bl = b[17: 0];
+   wire [13: 0]   bh = b[31:18];
 
-		/* Internal Product */	
-	wire	[47: 0]	p_int;
-	
-	dsp48e1_wrapper dsp_subtractor
-	(
-		.clk			(clk),
-	
-		.ce			(1'b1),
-		
-		.carry		(b_in),
-		
-		.alumode		(dsp48e1_alumode),
-		.opmode		(dsp48e1_opmode),
-		
-		.a				({{16{1'b0}}, bh}),
-		.b				(bl),
-		.c				({{16{1'b0}}, a}),
-		
-		.p				(p_int)
-	);
+   //
+   // DSP48E1 Slice
+   //
 
-		//
-		// Output Mapping
-		//
-	assign d 		= p_int[31: 0];
-	assign b_out	= p_int[32];
+   /* Operation Mode */
+   wire [ 3: 0]   dsp48e1_alumode	= 4'b0011;
+   wire [ 6: 0]   dsp48e1_opmode		= 7'b0110011;
+
+   /* Internal Product */
+   wire [47: 0]   p_int;
+
+   dsp48e1_wrapper dsp_subtractor
+     (
+      .clk			(clk),
+
+      .ce			(1'b1),
+
+      .carry		(b_in),
+
+      .alumode		(dsp48e1_alumode),
+      .opmode		(dsp48e1_opmode),
+
+      .a				({{16{1'b0}}, bh}),
+      .b				(bl),
+      .c				({{16{1'b0}}, a}),
+
+      .p				(p_int)
+      );
+
+   //
+   // Output Mapping
+   //
+   assign d 		= p_int[31: 0];
+   assign b_out	= p_int[32];
 
 endmodule
 

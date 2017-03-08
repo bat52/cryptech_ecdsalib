@@ -37,29 +37,29 @@
 //------------------------------------------------------------------------------
 
 module adder32_generic
-	(
-		input					clk,		// clock
-		input		[31: 0]	a,			// operand input
-		input		[31: 0]	b,			// operand input
-		output	[31: 0]	s,			// sum output
-		input					c_in,		// carry input
-		output				c_out		// carry output
-	);
-	
-		//
-		// Sum
-		//
-	reg	[32: 0]	s_int;
-	
-	always @(posedge clk)
-		s_int <= {1'b0, a} + {1'b0, b} + {{32{1'b0}}, c_in};
-		
-		//
-		// Output
-		//
-	assign s = s_int[31:0];
-	assign c_out = s_int[32];
-		
+  (
+   input 	  clk, // clock
+   input [31: 0]  a, // operand input
+   input [31: 0]  b, // operand input
+   output [31: 0] s, // sum output
+   input 	  c_in, // carry input
+   output 	  c_out		// carry output
+   );
+
+   //
+   // Sum
+   //
+   reg [32: 0] 	  s_int;
+
+   always @(posedge clk)
+     s_int <= {1'b0, a} + {1'b0, b} + {{32{1'b0}}, c_in};
+
+   //
+   // Output
+   //
+   assign s = s_int[31:0];
+   assign c_out = s_int[32];
+
 endmodule
 
 //------------------------------------------------------------------------------

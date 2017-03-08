@@ -37,35 +37,35 @@
 //------------------------------------------------------------------------------
 
 module mac16_wrapper
-	(
-		input					clk,		// clock
-		input					clr,		// clear accumulator (active-high)
-		input					ce,		// enable clock (active-high)
-		input		[15: 0]	a,			// operand input
-		input		[15: 0]	b,			// operand input
-		output	[46: 0]	s			// sum output
-	);
-	
-			
-		//
-		// Include Primitive Selector
-		//
+  (
+   input 	  clk, // clock
+   input 	  clr, // clear accumulator (active-high)
+   input 	  ce, // enable clock (active-high)
+   input [15: 0]  a, // operand input
+   input [15: 0]  b, // operand input
+   output [46: 0] s			// sum output
+   );
+
+
+   //
+   // Include Primitive Selector
+   //
 `include "ecdsa_lowlevel_settings.v"
 
 
-		//
-		// Instantiate Vendor/Generic Primitive
-		//
-	`MAC16_PRIMITIVE mac16_inst
-	(
-		.clk(clk),
-		.clr(clr),
-		.ce(ce),
-		.a(a),
-		.b(b),
-		.s(s)
-	);
-	
+   //
+   // Instantiate Vendor/Generic Primitive
+   //
+   `MAC16_PRIMITIVE mac16_inst
+     (
+      .clk(clk),
+      .clr(clr),
+      .ce(ce),
+      .a(a),
+      .b(b),
+      .s(s)
+      );
+
 
 endmodule
 

@@ -37,34 +37,34 @@
 //------------------------------------------------------------------------------
 
 module adder32_wrapper
-	(
-		input					clk,		// clock
-		input		[31: 0]	a,			// operand input
-		input		[31: 0]	b,			// operand input
-		output	[31: 0]	s,			// sum output
-		input					c_in,		// carry input
-		output				c_out		// carry output
-	);
-	
-		//
-		// Include Primitive Selector
-		//
+  (
+   input 	  clk, // clock
+   input [31: 0]  a, // operand input
+   input [31: 0]  b, // operand input
+   output [31: 0] s, // sum output
+   input 	  c_in, // carry input
+   output 	  c_out		// carry output
+   );
+
+   //
+   // Include Primitive Selector
+   //
 `include "ecdsa_lowlevel_settings.v"
 
 
-		//
-		// Instantiate Vendor/Generic Primitive
-		//
-	`ADDER32_PRIMITIVE adder32_inst
-	(
-		.clk(clk),
-		.a(a),
-		.b(b),
-		.s(s),
-		.c_in(c_in),
-		.c_out(c_out)
-	);
-	
+   //
+   // Instantiate Vendor/Generic Primitive
+   //
+   `ADDER32_PRIMITIVE adder32_inst
+     (
+      .clk(clk),
+      .a(a),
+      .b(b),
+      .s(s),
+      .c_in(c_in),
+      .c_out(c_out)
+      );
+
 
 endmodule
 

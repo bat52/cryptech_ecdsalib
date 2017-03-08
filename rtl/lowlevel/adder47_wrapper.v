@@ -37,31 +37,31 @@
 //------------------------------------------------------------------------------
 
 module adder47_wrapper
-	(
-		input					clk,		// clock
-		input		[46: 0]	a,			// operand input
-		input		[46: 0]	b,			// operand input
-		output	[46: 0]	s			// sum output
-	);
-	
-		//
-		// Include Primitive Selector
-		//
+  (
+   input 	  clk, // clock
+   input [46: 0]  a, // operand input
+   input [46: 0]  b, // operand input
+   output [46: 0] s			// sum output
+   );
+
+   //
+   // Include Primitive Selector
+   //
 `include "ecdsa_lowlevel_settings.v"
 
 
-		//
-		// Instantiate Vendor/Generic Primitive
-		//
-	`ADDER47_PRIMITIVE adder47_inst
-	(
-		.clk(clk),
-		.a(a),
-		.b(b),
-		.s(s)
-	);
-	
-	
+   //
+   // Instantiate Vendor/Generic Primitive
+   //
+   `ADDER47_PRIMITIVE adder47_inst
+     (
+      .clk(clk),
+      .a(a),
+      .b(b),
+      .s(s)
+      );
+
+
 endmodule
 
 //------------------------------------------------------------------------------

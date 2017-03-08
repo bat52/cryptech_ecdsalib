@@ -37,123 +37,123 @@
 //------------------------------------------------------------------------------
 
 module dsp48e1_wrapper
-	(
-		input					clk,
-		
-		input					ce,
-		
-		input		[ 6: 0]	opmode,
-		input		[ 3: 0]	alumode,
-		
-		input					carry,
-		
-		input		[29: 0]	a,
-		input		[17: 0]	b,
-		input		[47: 0]	c,
-		
-		output	[47: 0]	p
-	);
-	
-	
-		//
-		// Tile instantiation
-		//
-	DSP48E1 #
-	(
-		.AREG						(0),
-		.BREG						(0),
-		.CREG						(0),
-		.DREG						(0),
-		.MREG						(0),
-		.PREG						(1),
-		.ADREG					(0),
-		
-		.ACASCREG				(0),
-		.BCASCREG				(0),
-		.ALUMODEREG				(0),
-		.INMODEREG				(0),
-		.OPMODEREG				(0),
-		.CARRYINREG				(0),
-		.CARRYINSELREG			(0),
+  (
+   input 	  clk,
 
-		.A_INPUT					("DIRECT"),
-		.B_INPUT					("DIRECT"),
-		
-		.USE_DPORT				("FALSE"),
-		.USE_MULT				("DYNAMIC"),
-		.USE_SIMD				("ONE48"),
+   input 	  ce,
 
-		.USE_PATTERN_DETECT	("NO_PATDET"),
-		.SEL_PATTERN			("PATTERN"),
-		.SEL_MASK				("MASK"),
-		.PATTERN					(48'h000000000000),
-		.MASK						(48'h3fffffffffff),
-		.AUTORESET_PATDET		("NO_RESET")
-	)
-	DSP48E1_inst
-	(
-		.CLK					(clk),
+   input [ 6: 0]  opmode,
+   input [ 3: 0]  alumode,
 
-		.RSTA					(1'b0),
-		.RSTB					(1'b0),
-		.RSTC					(1'b0),
-		.RSTD					(1'b0),
-		.RSTM					(1'b0),
-		.RSTP					(1'b0),
+   input 	  carry,
 
-		.RSTCTRL				(1'b0),
-		.RSTINMODE			(1'b0),
-		.RSTALUMODE			(1'b0),
-		.RSTALLCARRYIN		(1'b0),
+   input [29: 0]  a,
+   input [17: 0]  b,
+   input [47: 0]  c,
 
-		.CEA1					(1'b0),
-		.CEA2					(1'b0),
-		.CEB1					(1'b0),
-		.CEB2					(1'b0),
-		.CEC					(1'b0),
-		.CED					(1'b0),
-		.CEM					(1'b0),
-		.CEP					(ce),
-		.CEAD					(1'b0),
-		.CEALUMODE			(1'b0),
-		.CEINMODE			(1'b0),
+   output [47: 0] p
+   );
 
-		.CECTRL				(1'b0),
-		.CECARRYIN			(1'b0),
 
-		.A						(a),
-		.B						(b),
-		.C						(c),
-		.D						({25{1'b1}}),
-		.P						(p),
+   //
+   // Tile instantiation
+   //
+   DSP48E1 #
+     (
+      .AREG						(0),
+      .BREG						(0),
+      .CREG						(0),
+      .DREG						(0),
+      .MREG						(0),
+      .PREG						(1),
+      .ADREG					(0),
 
-		.CARRYIN				(carry),
-		.CARRYOUT			(),
-		.CARRYINSEL			(3'b000),
+      .ACASCREG				(0),
+      .BCASCREG				(0),
+      .ALUMODEREG				(0),
+      .INMODEREG				(0),
+      .OPMODEREG				(0),
+      .CARRYINREG				(0),
+      .CARRYINSELREG			(0),
 
-		.CARRYCASCIN		(1'b0),
-		.CARRYCASCOUT		(),
+      .A_INPUT					("DIRECT"),
+      .B_INPUT					("DIRECT"),
 
-		.PATTERNDETECT		(),
-		.PATTERNBDETECT	(),
+      .USE_DPORT				("FALSE"),
+      .USE_MULT				("DYNAMIC"),
+      .USE_SIMD				("ONE48"),
 
-		.OPMODE				(opmode),
-		.ALUMODE				(alumode),
-		.INMODE				(5'b00000),
+      .USE_PATTERN_DETECT	("NO_PATDET"),
+      .SEL_PATTERN			("PATTERN"),
+      .SEL_MASK				("MASK"),
+      .PATTERN					(48'h000000000000),
+      .MASK						(48'h3fffffffffff),
+      .AUTORESET_PATDET		("NO_RESET")
+      )
+   DSP48E1_inst
+     (
+      .CLK					(clk),
 
-		.MULTSIGNIN			(1'b0),
-		.MULTSIGNOUT		(),
+      .RSTA					(1'b0),
+      .RSTB					(1'b0),
+      .RSTC					(1'b0),
+      .RSTD					(1'b0),
+      .RSTM					(1'b0),
+      .RSTP					(1'b0),
 
-		.UNDERFLOW			(),
-		.OVERFLOW			(),
+      .RSTCTRL				(1'b0),
+      .RSTINMODE			(1'b0),
+      .RSTALUMODE			(1'b0),
+      .RSTALLCARRYIN		(1'b0),
 
-		.ACIN					(30'd0),
-		.BCIN					(18'd0),
-		.PCIN					(48'd0),
+      .CEA1					(1'b0),
+      .CEA2					(1'b0),
+      .CEB1					(1'b0),
+      .CEB2					(1'b0),
+      .CEC					(1'b0),
+      .CED					(1'b0),
+      .CEM					(1'b0),
+      .CEP					(ce),
+      .CEAD					(1'b0),
+      .CEALUMODE			(1'b0),
+      .CEINMODE			(1'b0),
 
-		.ACOUT				(),
-		.BCOUT				(),
-		.PCOUT				()
-  );
+      .CECTRL				(1'b0),
+      .CECARRYIN			(1'b0),
+
+      .A						(a),
+      .B						(b),
+      .C						(c),
+      .D						({25{1'b1}}),
+      .P						(p),
+
+      .CARRYIN				(carry),
+      .CARRYOUT			(),
+      .CARRYINSEL			(3'b000),
+
+      .CARRYCASCIN		(1'b0),
+      .CARRYCASCOUT		(),
+
+      .PATTERNDETECT		(),
+      .PATTERNBDETECT	(),
+
+      .OPMODE				(opmode),
+      .ALUMODE				(alumode),
+      .INMODE				(5'b00000),
+
+      .MULTSIGNIN			(1'b0),
+      .MULTSIGNOUT		(),
+
+      .UNDERFLOW			(),
+      .OVERFLOW			(),
+
+      .ACIN					(30'd0),
+      .BCIN					(18'd0),
+      .PCIN					(48'd0),
+
+      .ACOUT				(),
+      .BCOUT				(),
+      .PCOUT				()
+      );
 
 endmodule

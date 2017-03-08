@@ -37,28 +37,28 @@
 //------------------------------------------------------------------------------
 
 module subtractor32_generic
-	(
-		input					clk,
-		input		[31: 0]	a,
-		input		[31: 0]	b,
-		output	[31: 0]	d,
-		input					b_in,
-		output				b_out	
-	);
+  (
+   input 	  clk,
+   input [31: 0]  a,
+   input [31: 0]  b,
+   output [31: 0] d,
+   input 	  b_in,
+   output 	  b_out
+   );
 
-		//
-		// Difference
-		//
-	reg	[32: 0]	d_int;
-	
-	always @(posedge clk)
-		d_int <= {1'b0, a} - {1'b0, b} - {{32{1'b0}}, b_in};
-		
-		//
-		// Output
-		//
-	assign d = d_int[31:0];
-	assign b_out = d_int[32];
+   //
+   // Difference
+   //
+   reg [32: 0] 	  d_int;
+
+   always @(posedge clk)
+     d_int <= {1'b0, a} - {1'b0, b} - {{32{1'b0}}, b_in};
+
+   //
+   // Output
+   //
+   assign d = d_int[31:0];
+   assign b_out = d_int[32];
 
 endmodule
 

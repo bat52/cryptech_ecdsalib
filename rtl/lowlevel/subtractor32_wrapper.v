@@ -37,33 +37,33 @@
 //------------------------------------------------------------------------------
 
 module subtractor32_wrapper
-	(
-		input					clk,
-		input		[31: 0]	a,
-		input		[31: 0]	b,
-		output	[31: 0]	d,
-		input					b_in,
-		output				b_out	
-	);
+  (
+   input 	  clk,
+   input [31: 0]  a,
+   input [31: 0]  b,
+   output [31: 0] d,
+   input 	  b_in,
+   output 	  b_out
+   );
 
-			//
-		// Include Primitive Selector
-		//
+   //
+   // Include Primitive Selector
+   //
 `include "ecdsa_lowlevel_settings.v"
 
 
-		//
-		// Instantiate Vendor/Generic Primitive
-		//
-	`SUBTRACTOR32_PRIMITIVE subtractor32_inst
-	(
-		.clk(clk),
-		.a(a),
-		.b(b),
-		.d(d),
-		.b_in(b_in),
-		.b_out(b_out)
-	);
+   //
+   // Instantiate Vendor/Generic Primitive
+   //
+   `SUBTRACTOR32_PRIMITIVE subtractor32_inst
+     (
+      .clk(clk),
+      .a(a),
+      .b(b),
+      .d(d),
+      .b_in(b_in),
+      .b_out(b_out)
+      );
 
 endmodule
 

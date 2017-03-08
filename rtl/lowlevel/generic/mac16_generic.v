@@ -37,34 +37,34 @@
 //------------------------------------------------------------------------------
 
 module mac16_generic
-	(
-		input					clk,		// clock
-		input					clr,		// clear accumulator (active-high)
-		input					ce,		// enable clock (active-high)
-		input		[15: 0]	a,			// operand input
-		input		[15: 0]	b,			// operand input
-		output	[46: 0]	s			// sum output
-	);
-	
-		//
-		// Multiplier
-		//
-	wire	[31: 0]	p = {{16{1'b0}}, a} * {{16{1'b0}}, b};
-	wire	[46: 0]	p_ext = {{15{1'b0}}, p};
-		
-		//
-		// Accumulator
-		//
-	reg	[46: 0]	s_int;
-	
-	always @(posedge clk)
-		//
-		if (ce) s_int <= clr ? p_ext : p_ext + s_int;
-		
-		//
-		// Output
-		//
-	assign s = s_int;
+  (
+   input 	  clk, // clock
+   input 	  clr, // clear accumulator (active-high)
+   input 	  ce, // enable clock (active-high)
+   input [15: 0]  a, // operand input
+   input [15: 0]  b, // operand input
+   output [46: 0] s			// sum output
+   );
+
+   //
+   // Multiplier
+   //
+   wire [31: 0]   p = {{16{1'b0}}, a} * {{16{1'b0}}, b};
+   wire [46: 0]   p_ext = {{15{1'b0}}, p};
+
+   //
+   // Accumulator
+   //
+   reg [46: 0] 	  s_int;
+
+   always @(posedge clk)
+     //
+     if (ce) s_int <= clr ? p_ext : p_ext + s_int;
+
+   //
+   // Output
+   //
+   assign s = s_int;
 
 endmodule
 
