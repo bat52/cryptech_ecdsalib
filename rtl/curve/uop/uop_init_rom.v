@@ -15,7 +15,7 @@ module uop_init_rom
 
 
    //
-   // Doubling Microprogram
+   // Initialization Microprogram
    //
    always @(posedge clk)
 
@@ -25,7 +25,7 @@ module uop_init_rom
        6'd01:	data <= {OPCODE_MOV, UOP_SRC_ONE,  UOP_SRC_DUMMY, UOP_DST_RY, UOP_EXEC_ALWAYS};
        6'd02:	data <= {OPCODE_MOV, UOP_SRC_ZERO, UOP_SRC_DUMMY, UOP_DST_RZ, UOP_EXEC_ALWAYS};
 
-       default:	data <= {OPCODE_RDY, UOP_SRC_DUMMY, UOP_SRC_DUMMY, UOP_DST_DUMMY};
+       default:	data <= {OPCODE_RDY, UOP_SRC_DUMMY, UOP_SRC_DUMMY, UOP_DST_DUMMY, UOP_EXEC_ALWAYS};
 
      endcase
 

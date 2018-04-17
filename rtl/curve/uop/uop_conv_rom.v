@@ -30,7 +30,7 @@ module uop_conv_rom
        6'd06:	data <= {OPCODE_MOV, UOP_SRC_ZERO, UOP_SRC_DUMMY, UOP_DST_RX,    UOP_EXEC_PZT1T2_0XX};
        6'd07:	data <= {OPCODE_MOV, UOP_SRC_ZERO, UOP_SRC_DUMMY, UOP_DST_RY,    UOP_EXEC_PZT1T2_0XX};
 
-       default:	data <= {OPCODE_RDY, UOP_SRC_DUMMY, UOP_SRC_DUMMY, UOP_DST_DUMMY};
+       default:	data <= {OPCODE_RDY, UOP_SRC_DUMMY, UOP_SRC_DUMMY, UOP_DST_DUMMY, UOP_EXEC_ALWAYS};
 
      endcase
 

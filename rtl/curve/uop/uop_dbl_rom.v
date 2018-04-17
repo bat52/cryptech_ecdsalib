@@ -50,7 +50,7 @@ module uop_dbl_rom
          6'd25:	data <= {OPCODE_MOV, UOP_SRC_ONE,   UOP_SRC_DUMMY, UOP_DST_RY,    UOP_EXEC_PZT1T2_0XX};
          6'd26:	data <= {OPCODE_MOV, UOP_SRC_ZERO,  UOP_SRC_DUMMY, UOP_DST_RZ,    UOP_EXEC_PZT1T2_0XX};
 
-       default:	data <= {OPCODE_RDY, UOP_SRC_DUMMY, UOP_SRC_DUMMY, UOP_DST_DUMMY};
+       default:	data <= {OPCODE_RDY, UOP_SRC_DUMMY, UOP_SRC_DUMMY, UOP_DST_DUMMY, UOP_EXEC_ALWAYS};
 
      endcase
 
