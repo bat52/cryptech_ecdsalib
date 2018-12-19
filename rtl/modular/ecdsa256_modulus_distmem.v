@@ -1,6 +1,6 @@
 //======================================================================
 //
-// Copyright (c) 2015, NORDUnet A/S All rights reserved.
+// Copyright (c) 2016, 2018 NORDUnet A/S All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions
@@ -30,64 +30,21 @@
 //
 //======================================================================
 
-`timescale 1ns / 1ps
-
-module bram_1rw_1ro_readfirst
-  #(parameter MEM_WIDTH            = 32,
-    parameter MEM_ADDR_BITS        = 8)
-   (
-    input wire 			   clk,
-
-    input wire [MEM_ADDR_BITS-1:0] a_addr,
-    input wire 			   a_wr,
-    input wire [MEM_WIDTH-1:0] 	   a_in,
-    output wire [MEM_WIDTH-1:0]    a_out,
-
-    input wire [MEM_ADDR_BITS-1:0] b_addr,
-    output wire [MEM_WIDTH-1:0]    b_out
-    );
-
-
-   //
-   // BRAM
-   //
-   (* RAM_STYLE="BLOCK" *)
-   reg [MEM_WIDTH-1:0] 		   bram[0:(2**MEM_ADDR_BITS)-1];
-
-
-   //
-   // Initialization
-   //
-   /**
-    integer c;
-    initial begin
-    for (c=0; c<(2**MEM_ADDR_BITS); c=c+1)
-    bram[c] = {MEM_WIDTH{1'b0}};
-	end
-    **/
-
+module ecdsa256_modulus_distmem
+  (
+   input wire 		clk,
+   input wire [ 3-1:0] 	b_addr,
+   output wire [32-1:0] b_out
+   );
 
 
    //
    // Output Registers
    //
-   reg [MEM_WIDTH-1:0] 		   bram_reg_a;
-   reg [MEM_WIDTH-1:0] 		   bram_reg_b;
+   (* ram_style="distributed" *)
+   reg [31:0] 		bram_reg_b;
 
-   assign a_out = bram_reg_a;
    assign b_out = bram_reg_b;
-
-
-   //
-   // Read-Write Port A
-   //
-   always @(posedge clk) begin
-      //
-      bram_reg_a <= bram[a_addr];
-      //
-      if (a_wr) bram[a_addr] <= a_in;
-      //
-   end
 
 
    //
@@ -95,7 +52,16 @@ module bram_1rw_1ro_readfirst
    //
    always @(posedge clk)
      //
-     bram_reg_b <= bram[b_addr];
+     case (b_addr)
+       3'b000:	bram_reg_b <= 32'hffffffff;
+       3'b001:	bram_reg_b <= 32'hffffffff;
+       3'b010:	bram_reg_b <= 32'hffffffff;
+       3'b011:	bram_reg_b <= 32'h00000000;
+       3'b100:	bram_reg_b <= 32'h00000000;
+       3'b101:	bram_reg_b <= 32'h00000000;
+       3'b110:	bram_reg_b <= 32'h00000001;
+       3'b111:	bram_reg_b <= 32'hffffffff;
+     endcase
 
 
 endmodule
